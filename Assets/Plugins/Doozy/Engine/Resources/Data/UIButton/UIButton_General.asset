@@ -21,3 +21,6 @@ MonoBehaviour:
   - GoMap
   - GoHowTo
   - GoStaff
+  - GoRecord
+  - GoPlay
+  - Cancel
