@@ -389,7 +389,7 @@ MonoBehaviour:
   m_debugMode: 0
   m_useFixedUpdate: 0
   m_useLateUpdate: 0
-  m_useUpdate: 0
+  m_useUpdate: 1
   m_height: 128
   m_width: 216
   m_x: -120
@@ -650,7 +650,7 @@ MonoBehaviour:
   m_version: 1
   m_description: 
   m_id: 2c4c46ef-d5b0-48d0-b3c6-6753009b8128
-  m_lastModified: 132838900352398435
+  m_lastModified: 132839705435532893
 --- !u!114 &2425677617090257207
 MonoBehaviour:
   m_ObjectHideFlags: 1
