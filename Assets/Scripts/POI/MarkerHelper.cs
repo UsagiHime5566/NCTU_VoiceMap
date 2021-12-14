@@ -1,11 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZoomHelper : MonoBehaviour
+[RequireComponent(typeof(SphereCollider))]
+public class MarkerHelper : MonoBehaviour
 {
-    SphereCollider eventCollider;
     public Transform GizmoColliRange;
+    
+    [Header("Runtime data")]
+    public POIData data;
+
+
+    public Action OnMarkerClick;
+    SphereCollider eventCollider;
     float defaultSize;
     void Awake()
     {
@@ -18,5 +26,9 @@ public class ZoomHelper : MonoBehaviour
 
         if(GizmoColliRange)
             GizmoColliRange.localScale = new Vector3(defaultSize * src * 2, defaultSize * src * 2, defaultSize * src * 2);
+    }
+
+    public void TrigUserArriveMarker(){
+        POIManager.instance.OnUserArrivedPoi?.Invoke(data);
     }
 }

@@ -10,11 +10,12 @@ public class POIManager : SoraLib.SingletonMono<POIManager>
 {
     public GameObject POI_Prefab;
     public GameObject SLAM_Prefab;
-    public List<Sprite> IconPack;
     string ServerURL = "";
-
+    public Color UserCollisionColor = Color.white;
 
     public Action OnAppInfosDownloaded;
+    public Action<POIData> OnUserClickPoi;
+    public Action<POIData> OnUserArrivedPoi;
 
     IEnumerator Start()
     {

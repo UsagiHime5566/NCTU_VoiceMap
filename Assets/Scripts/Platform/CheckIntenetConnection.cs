@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CheckIntenetConnection : SoraLib.SingletonMono<CheckIntenetConnection>
 {
-    public bool InternetStats = false;
+    [HimeLib.HelpBox] public string tip ="檢查是否有網路";
+    [HideInInspector] public bool InternetStats = false;
     private void Start()
     {
         // Begin to check your Internet connection.

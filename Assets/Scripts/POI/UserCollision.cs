@@ -6,9 +6,9 @@ public class UserCollision : MonoBehaviour
 {
     void OnTriggerEnter(Collider other) {
         if(other.gameObject.CompareTag("POI")){
-            var poi = other.GetComponent<POIMarker>().data;
+            var markerHelper = other.GetComponent<MarkerHelper>();
 
-            //InfoBoxLayout.instance.OpenInfoBoxWithPOI(poi);
+            markerHelper?.TrigUserArriveMarker();
 
             //Shake Device
             Handheld.Vibrate();
@@ -18,7 +18,7 @@ public class UserCollision : MonoBehaviour
 
             Transform child = other.gameObject.transform.GetChild(0);
             if(child != null)
-                child.GetComponent<Renderer>().material.color = Color.green;
+                child.GetComponent<Renderer>().material.color = POIManager.instance.UserCollisionColor;
         }
     }
 
@@ -26,9 +26,6 @@ public class UserCollision : MonoBehaviour
     {
         if(other.gameObject.CompareTag("POI"))
         {
-            //arrivePOI = null;
-            var poi = other.GetComponent<POIMarker>().data;
-
             if(other.gameObject.transform.childCount == 0)
                 return;
 

@@ -7,6 +7,7 @@ using UnityEngine.Android;
 
 public class RequirePermissions : MonoBehaviour
 {
+    [HimeLib.HelpBox] public string tip ="要求Android的各種權限";
     public GameObject MapSystem;
 
     void Awake()

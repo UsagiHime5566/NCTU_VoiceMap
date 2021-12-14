@@ -280,6 +280,7 @@ public abstract class OnlineMapsLocationServiceBase : MonoBehaviour, IOnlineMaps
     {
         _baseInstance = this;
         map = GetComponent<OnlineMaps>();
+        if (map == null) map = GetComponentInParent<OnlineMaps>();
         if (map != null) map.OnChangePosition += OnChangePosition;
     }
 

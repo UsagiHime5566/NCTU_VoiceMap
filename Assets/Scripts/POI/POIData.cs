@@ -9,46 +9,43 @@ public class POIData : MonoBehaviour
     public double Longitude;
     public string Title;
     public string Content;
+    public OnlineMapsMarker3D connectedMarker;
 
-    OnlineMapsMarker3D dynamicMarker;
+    MarkerHelper connectedMarkerHelper;
     int defaultZoom = 18;
-
     void Start()
     {
         defaultZoom = OnlineMaps.instance.zoom;
 
         // Add OnClick events to dynamic markers
-        dynamicMarker = OnlineMapsMarker3DManager.CreateItem(Longitude, Latitude, POIManager.instance.POI_Prefab);
-        dynamicMarker.instance.name = string.Format("Marker_{0}", POI_Name);
+        connectedMarker = OnlineMapsMarker3DManager.CreateItem(Longitude, Latitude, POIManager.instance.POI_Prefab);
+        connectedMarker.instance.name = string.Format("Marker_{0}", POI_Name);
+
+        //不好用
         //dynamicMarker.OnClick += OnMarkerClick;
         //dynamicMarker.label = POI_Name;
         //dynamicMarker.SetDraggable();
 
-        POIMarker markerPOI = dynamicMarker.instance.AddComponent<POIMarker>();
-        markerPOI.data = this;
-        markerPOI.OnClickPOI += OnMarkerClick;
+        connectedMarkerHelper = connectedMarker.instance.GetComponent<MarkerHelper>();
+        connectedMarkerHelper.data = this;
+        connectedMarkerHelper.OnMarkerClick += OnMarkerClick;
 
         //Subscribe to zoom change
         OnlineMaps.instance.OnChangeZoom += OnChangeZoom;
     }
 
-    private void OnMarkerClick(POIMarker markerPOI)
+    private void OnMarkerClick()
     {
-        //InfoBoxLayout.instance.OpenInfoBoxWithPOI(this);
+        POIManager.instance.OnUserClickPoi?.Invoke(this);
     }
 
     private void OnChangeZoom()
     {
-        //Example of scaling object
-        //int zoom = OnlineMaps.instance.zoom;
-
-        //float s = 10f / (2 << (zoom - 5));
-
         float originalScale = 1 << defaultZoom;
         float currentScale = 1 << OnlineMaps.instance.zoom;
 
-        //ZoomHelper helper = dynamicMarker.instance.GetComponent<ZoomHelper>();
-        //helper.SetGizmoRange(currentScale / originalScale);
+        // Sora: Zoom Marker Collision
+        connectedMarkerHelper.SetGizmoRange(currentScale / originalScale);
     }
 
     private void OnValidate() {

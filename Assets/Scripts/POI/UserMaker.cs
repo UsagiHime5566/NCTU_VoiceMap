@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class UserMaker : MonoBehaviour
 {
-    public float scaleSize = 30;
+    [HimeLib.HelpBox] public string tip = "由此Script動態建立Marker，並且此Marker的位置受到GPS控制";
+    public float scaleSize = 1;
     public GameObject prefab;
 
-    private OnlineMapsMarker3D locationMarker;
-    private Transform markerSprite;
 
-    private Vector2 newPosition;
-    private float newCompass;
+    OnlineMapsMarker3D locationMarker;
+    Transform markerSprite;
+    Vector2 newPosition;
+    float newCompass;
     float yVelocity = 0.0f;
     float smooth = 1.0f;
     int defaultZoom = 18;
