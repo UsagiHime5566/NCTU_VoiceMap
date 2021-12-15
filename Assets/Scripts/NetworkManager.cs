@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -48,8 +49,8 @@ public class NetworkManager : SoraLib.SingletonMono<NetworkManager>
         }));
     }
 
-    public void API_GetFile(string fileID){
-        StartCoroutine(HttpGetFile(fileID));
+    public string API_GetFileUrl(string fileID){
+        return serverURL + getMedia + "/" + fileID;
     }
 
     public IEnumerator HttpPostJSON(string url, string json, System.Action<string> callback)
@@ -79,12 +80,18 @@ public class NetworkManager : SoraLib.SingletonMono<NetworkManager>
     }
 
     public IEnumerator HttpPostFile(string url, string filePath, string fileName){
+        
+        WWWForm form = new WWWForm();
+        form.AddBinaryData("file", File.ReadAllBytes(filePath), fileName);
+        UnityWebRequest www = UnityWebRequest.Post(url, form);
 
-        yield return null;
-    }
+        yield return www.SendWebRequest();
 
-    public IEnumerator HttpGetFile(string fileName){
-        yield return null;
+        if (www.isNetworkError || www.isHttpError){
+            Debug.Log(www.error);
+        } else {
+            Debug.Log("Form upload complete! >> :" + www.downloadHandler.text);
+        }
     }
 
     public string GetLocationJSON(double lat, double lon)
