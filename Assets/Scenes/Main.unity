@@ -22536,6 +22536,7 @@ GameObject:
   - component: {fileID: 1456468415}
   - component: {fileID: 1456468414}
   - component: {fileID: 1456468413}
+  - component: {fileID: 1456468419}
   m_Layer: 0
   m_Name: View - Upload
   m_TagString: Untagged
@@ -23092,6 +23093,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1456468419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456468411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67230abe468da524e8939686c3050f82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TXT_Progress: {fileID: 0}
+  BTN_Cancel: {fileID: 0}
 --- !u!1 &1595545815
 GameObject:
   m_ObjectHideFlags: 0
