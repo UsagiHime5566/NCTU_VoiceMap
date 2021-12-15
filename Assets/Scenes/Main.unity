@@ -19530,7 +19530,7 @@ MonoBehaviour:
   RecordCamera: {fileID: 71828658}
   BTN_StartRecord: {fileID: 664924345}
   BTN_Back: {fileID: 1996809254}
-  DozzyGotoUpload: RecordFin
+  DozzyEventGotoUpload: RecordFin
   maxDuration: 10
   countdown: {fileID: 73439277}
 --- !u!222 &1357711623
@@ -23105,8 +23105,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67230abe468da524e8939686c3050f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TXT_Progress: {fileID: 0}
-  BTN_Cancel: {fileID: 0}
+  TXT_Progress: {fileID: 895308301}
+  BTN_Cancel: {fileID: 448659173}
+  DozzyEventUploadFin: UploadFin
+  DozzyPopupUploadFin: UploadFinTip
 --- !u!1 &1595545815
 GameObject:
   m_ObjectHideFlags: 0

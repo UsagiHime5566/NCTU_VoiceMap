@@ -8,7 +8,7 @@ public class NodeRecord : NodeControlBase
     public CameraHelperBase RecordCamera;
     public Button BTN_StartRecord;
     public Button BTN_Back;
-    public string DozzyGotoUpload;
+    public string DozzyEventGotoUpload;
 
     [Header(@"Settings"), Range(5f, 60f), Tooltip(@"Maximum duration that button can be pressed.")]
     public float maxDuration = 10f;
@@ -62,7 +62,7 @@ public class NodeRecord : NodeControlBase
 
         //Goto Upload
         if(normalEnd){
-            Doozy.Engine.GameEventMessage.SendEvent(DozzyGotoUpload);
+            Doozy.Engine.GameEventMessage.SendEvent(DozzyEventGotoUpload);
         }
     }
 
