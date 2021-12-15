@@ -17,6 +17,8 @@ public class NetworkManager : SoraLib.SingletonMono<NetworkManager>
     public string currentUUID;
 
     public string uploadUUID;
+
+    public PoiBoxList Poi_Box;
     void Start()
     {
         currentUUID = System.Guid.NewGuid().ToString().Replace("-", "");
@@ -45,7 +47,14 @@ public class NetworkManager : SoraLib.SingletonMono<NetworkManager>
     public void API_GetBoxList(double lat, double lon)
     {
         StartCoroutine(HttpPostJSON(serverURL + getBoxList, GetLocationUUIDJSON(lat, lon, currentUUID), json => {
-            
+            try {
+                var fullJson = "{\"box\":" + json + "}";
+                PoiBoxList box = JsonUtility.FromJson<PoiBoxList>(fullJson);
+                Poi_Box = box;
+
+            } catch(System.Exception e){
+                Debug.Log(e.Message);
+            }
         }));
     }
 
@@ -110,12 +119,14 @@ public class NetworkManager : SoraLib.SingletonMono<NetworkManager>
         return JsonUtility.FromJson<DataUUID>(json);
     }
 
+    [System.Serializable]
     public class LocationJSON
     {
         public double latitude;
         public double longitude;
     }
 
+    [System.Serializable]
     public class LocationUUIDJSON
     {
         public double latitude;
@@ -123,6 +134,7 @@ public class NetworkManager : SoraLib.SingletonMono<NetworkManager>
         public string uid;
     }
 
+    [System.Serializable]
     public class DataUUID
     {
         public string expire;
@@ -130,5 +142,21 @@ public class NetworkManager : SoraLib.SingletonMono<NetworkManager>
         public double longitude;
         public string timestamp;
         public string uuid;
+    }
+
+    [System.Serializable]
+    public class PoiBoxList
+    {
+        public List<PoiBox> box;
+    }
+
+    [System.Serializable]
+    public class PoiBox
+    {
+        public int id;
+        public double latitude;
+        public double longitude;
+        public string timestamp;
+        public string media_filename;
     }
 }
