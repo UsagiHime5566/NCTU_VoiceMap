@@ -29,6 +29,11 @@ public class MarkerHelper : MonoBehaviour
     }
 
     public void TrigUserArriveMarker(){
+        data.isNear = true;
         POIManager.instance.OnUserArrivedPoi?.Invoke(data);
+    }
+
+    public void LeavePOI(){
+        data.isNear = false;
     }
 }

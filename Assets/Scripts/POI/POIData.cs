@@ -9,7 +9,9 @@ public class POIData : MonoBehaviour
     public double Longitude;
     public string Title;
     public string Content;
+    public string Media;
     public OnlineMapsMarker3D connectedMarker;
+    public bool isNear = false;
 
     MarkerHelper connectedMarkerHelper;
     int defaultZoom = 18;

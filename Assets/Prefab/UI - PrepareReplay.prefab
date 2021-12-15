@@ -2719,6 +2719,7 @@ GameObject:
   - component: {fileID: 5332999888664935508}
   - component: {fileID: 5332999888664935509}
   - component: {fileID: 5332999888664935514}
+  - component: {fileID: 7885736467593508103}
   m_Layer: 0
   m_Name: UI - PrepareReplay
   m_TagString: Untagged
@@ -3126,6 +3127,20 @@ MonoBehaviour:
   UpdateHideProgressorOnShow: 0
   UpdateShowProgressorOnHide: 0
   UseOverlay: 1
+--- !u!114 &7885736467593508103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5332999888664935512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cf5debb2d414044689cdb0fdb07bb56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BTN_Start: {fileID: 1542711107211709670}
+  Url: 
 --- !u!1 &5332999888726401664
 GameObject:
   m_ObjectHideFlags: 0

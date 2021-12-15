@@ -8,45 +8,36 @@ public class NetworkManager : SoraLib.SingletonMono<NetworkManager>
 {
     [Header(@"API URL")]
     public string serverURL = "https://media.iottalktw.com";
-    public string getUploadAccess = "/api/getUploadAccess";
-    public string upload = "/api/upload";
-    public string getBoxList = "/api/getBoxList";
-    public string getMedia = "/api/media";
+    public string api_getUploadAccess = "/api/getUploadAccess";
+    public string api_doUpload = "/api/upload";
+    public string api_getBoxList = "/api/getBoxList";
+    public string api_getMedia = "/api/media";
 
 
+    [Header(@"Runtimes")]
     public string currentUUID;
-
     public string uploadUUID;
-
     public PoiBoxList Poi_Box;
     void Start()
     {
         currentUUID = System.Guid.NewGuid().ToString().Replace("-", "");
-
-        //Debug.Log($"Create UUID : {currentUUID}");
-        //Debug.Log(GetLocationJSON(24.7867, 121.9977));
-        //StartCoroutine(HttpPost(GetLocationJSON(24.7867, 121.9977)));
-
-        //HttpGetBoxList();
     }
-
-    
 
     public void API_UploadAccess(double lat, double lon)
     {
-        StartCoroutine(HttpPostJSON(serverURL + getUploadAccess, GetLocationJSON(lat, lon), json => {
+        StartCoroutine(HttpPostJSON(serverURL + api_getUploadAccess, GetLocationJSON(lat, lon), json => {
             DataUUID data = GetDataUUID(json);
             uploadUUID = data.uuid;
         }));
     }
 
     public void API_UploadFile(string filePath, string fileID){
-        StartCoroutine(HttpPostFile(serverURL + upload, filePath, fileID));
+        StartCoroutine(HttpPostFile(serverURL + api_doUpload, filePath, fileID));
     }
 
     public void API_GetBoxList(double lat, double lon)
     {
-        StartCoroutine(HttpPostJSON(serverURL + getBoxList, GetLocationUUIDJSON(lat, lon, currentUUID), json => {
+        StartCoroutine(HttpPostJSON(serverURL + api_getBoxList, GetLocationUUIDJSON(lat, lon, currentUUID), json => {
             try {
                 var fullJson = "{\"box\":" + json + "}";
                 PoiBoxList box = JsonUtility.FromJson<PoiBoxList>(fullJson);
@@ -59,7 +50,7 @@ public class NetworkManager : SoraLib.SingletonMono<NetworkManager>
     }
 
     public string API_GetFileUrl(string fileID){
-        return serverURL + getMedia + "/" + fileID;
+        return serverURL + api_getMedia + "/" + fileID;
     }
 
     public IEnumerator HttpPostJSON(string url, string json, System.Action<string> callback)

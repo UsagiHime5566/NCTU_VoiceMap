@@ -722,6 +722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92b3a327ca9b06e4ca87016bdd3951d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tip: "\u5C07\u4F7F\u7528\u8005\u8CC7\u6599\u66AB\u5B58\u81F3RecordManager"
   INP_Title: {fileID: 5233240778502325201}
   INP_Content: {fileID: 5233240778339002071}
   BTN_StartRecord: {fileID: 5233240777067111643}

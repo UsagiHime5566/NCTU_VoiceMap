@@ -10,7 +10,6 @@ public class POIManager : SoraLib.SingletonMono<POIManager>
 {
     public GameObject POI_Prefab;
     public GameObject SLAM_Prefab;
-    string ServerURL = "";
     public Color UserCollisionColor = Color.white;
 
     public Action OnAppInfosDownloaded;
@@ -45,6 +44,7 @@ public class POIManager : SoraLib.SingletonMono<POIManager>
             string poiName = csvTable[i][(int)CSVIndex.NAME];
             string title = csvTable[i][(int)CSVIndex.TITLE];
             string content = csvTable[i][(int)CSVIndex.CONTENT];
+            string media = csvTable[i][(int)CSVIndex.MEDIA];
             double Lat_Obj, Lon_Obj;
             double.TryParse(csvTable[i][(int)CSVIndex.LAT], out Lat_Obj);
             double.TryParse(csvTable[i][(int)CSVIndex.LON], out Lon_Obj);
@@ -59,6 +59,7 @@ public class POIManager : SoraLib.SingletonMono<POIManager>
             data.Longitude = Lon_Obj;
             data.Title = title;
             data.Content = content;
+            data.Media = media;
 
             poi.transform.parent = transform;
             poi.name = string.Format("POI_{0}", poiName);
@@ -75,12 +76,16 @@ public class POIManager : SoraLib.SingletonMono<POIManager>
             return;
         }
 
-        string url = csvTable[1][0];
+        string serverUrl = csvTable[1][0];
         string ver = csvTable[1][1];
         string about = csvTable[1][2];
         string contact = csvTable[1][3];
         string staff = csvTable[1][4];
         string initPosition = csvTable[1][5];
+        string api_getUploadAccess = csvTable[1][6];
+        string api_doUpload = csvTable[1][7];
+        string api_getBoxList = csvTable[1][8];
+        string api_getMedia = csvTable[1][9];
 
         try {
             double lat = 0, lon = 0;
@@ -97,8 +102,12 @@ public class POIManager : SoraLib.SingletonMono<POIManager>
             Debug.Log(e.Message.ToString());
         }
 
-        ServerURL = url;
-        Debug.Log($"Use Server URL : {ServerURL}");
+        NetworkManager.instance.serverURL = serverUrl;
+        NetworkManager.instance.api_getUploadAccess = api_getUploadAccess;
+        NetworkManager.instance.api_doUpload = api_doUpload;
+        NetworkManager.instance.api_getBoxList = api_getBoxList;
+        NetworkManager.instance.api_getMedia = api_getMedia;
+        Debug.Log($"Use Server URL : {serverUrl} , with API: {api_getUploadAccess} , {api_doUpload} , {api_getBoxList} , {api_getMedia}");
 
         //AboutMeLayout.instance.UpdateAboutMe(about_title, about_content);
         OnAppInfosDownloaded?.Invoke();
@@ -133,5 +142,6 @@ public class POIManager : SoraLib.SingletonMono<POIManager>
         LON = 2,
         TITLE = 3,
         CONTENT = 4,
+        MEDIA = 5,
     }
 }

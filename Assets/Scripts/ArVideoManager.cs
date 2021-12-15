@@ -5,9 +5,15 @@ using UnityEngine;
 public class ArVideoManager : SoraLib.SingletonMono<ArVideoManager>
 {
     public VideoCanvas prefab_VideoCanvas;
+    public string PrepareMediaFile;
 
     string lastUrl;
     VideoCanvas lastInstance;
+
+    public void CreateVideoCanvas(Vector3 pos){
+        string url = NetworkManager.instance.serverURL + NetworkManager.instance.api_getMedia + "/" + PrepareMediaFile;
+        CreateVideoCanvas(pos, url);
+    }
 
     public void CreateVideoCanvas(Vector3 pos, string url){
         if(string.IsNullOrEmpty(url))

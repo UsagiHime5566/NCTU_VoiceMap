@@ -5,7 +5,8 @@ using UnityEngine;
 public class UserCollision : MonoBehaviour
 {
     void OnTriggerEnter(Collider other) {
-        if(other.gameObject.CompareTag("POI")){
+        if(other.gameObject.CompareTag("POI"))
+        {
             var markerHelper = other.GetComponent<MarkerHelper>();
 
             markerHelper?.TrigUserArriveMarker();
@@ -26,6 +27,10 @@ public class UserCollision : MonoBehaviour
     {
         if(other.gameObject.CompareTag("POI"))
         {
+            var markerHelper = other.GetComponent<MarkerHelper>();
+
+            markerHelper?.LeavePOI();
+
             if(other.gameObject.transform.childCount == 0)
                 return;
 

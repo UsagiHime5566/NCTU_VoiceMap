@@ -27,6 +27,9 @@ public class NodeMap : NodeControlBase
         //Debug.Log(m_popup.Data.LabelsCount);
         m_popup.Data.Labels[2].SetActive(false);
 
+        var info = m_popup.GetComponent<PopupVideoInfo>();
+        info.Url = data.Media;
+
         //show the popup
         m_popup.Show();
     }
@@ -40,9 +43,18 @@ public class NodeMap : NodeControlBase
 
         //set the achievement title and message
         m_popup.Data.SetLabelsTexts(data.Title, data.Content, distanceTip);
-        m_popup.Data.Buttons[0].Interactable = false;
-        m_popup.Data.Labels[2].SetActive(true);
 
+        if(data.isNear){
+            m_popup.Data.Buttons[0].Interactable = true;
+            m_popup.Data.Labels[2].SetActive(false);
+
+            var info = m_popup.GetComponent<PopupVideoInfo>();
+            info.Url = data.Media;
+        } else {
+            m_popup.Data.Buttons[0].Interactable = false;
+            m_popup.Data.Labels[2].SetActive(true);
+        }
+        
         //show the popup
         m_popup.Show();
     }
