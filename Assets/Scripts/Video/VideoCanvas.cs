@@ -11,7 +11,18 @@ public class VideoCanvas : MonoBehaviour
     public void Play(string url){
         videoPlayer.source = VideoSource.Url;
         videoPlayer.url = url;
-        videoPlayer.Play();
+
+        videoPlayer.prepareCompleted += vp => {
+            vp.Play();
+        };
+        videoPlayer.Prepare();
+
+        // try {
+        //     videoPlayer.Play();
+        // } catch (System.Exception e){
+        //     videoPlayer.Stop();
+        //     Debug.LogError(e.Message);
+        // }
     }
 
     public void SetScale(float scale){

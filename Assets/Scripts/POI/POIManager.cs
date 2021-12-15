@@ -24,6 +24,8 @@ public class POIManager : SoraLib.SingletonMono<POIManager>
         DownloadManager.GoogleGetCSV(ImportPOIData, OnlineDataManager.instance.webService, OnlineDataManager.instance.sheetID, OnlineDataManager.instance.POI_pageID);
         yield return new WaitForSeconds(2.0f);
         DownloadManager.GoogleGetCSV(GetInfos, OnlineDataManager.instance.webService, OnlineDataManager.instance.sheetID, OnlineDataManager.instance.Infos_PageID);
+
+        NetworkManager.instance.OnNewPosUploaded += CreatePOI;
     }
 
     public void ImportPOIData(string csvFile)
@@ -111,6 +113,21 @@ public class POIManager : SoraLib.SingletonMono<POIManager>
 
         //AboutMeLayout.instance.UpdateAboutMe(about_title, about_content);
         OnAppInfosDownloaded?.Invoke();
+    }
+
+    public void CreatePOI(string poiName, double Lat_Obj, double Lon_Obj, string title, string content, string media){
+        GameObject poi = new GameObject();
+        poi.tag = "POI";
+        POIData data = poi.AddComponent<POIData>();
+        data.POI_Name = poiName;
+        data.Latitude = Lat_Obj;
+        data.Longitude = Lon_Obj;
+        data.Title = title;
+        data.Content = content;
+        data.Media = media;
+
+        poi.transform.parent = transform;
+        poi.name = string.Format("POI_{0}", poiName);
     }
 
     IEnumerator PingConnect()

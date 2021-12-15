@@ -42,7 +42,7 @@ public class NodeRecord : NodeControlBase
     private IEnumerator Countdown()
     {
         // Start recording
-        //RecordManager.instance.recordHelper.StartRecording();
+        RecordManager.instance.recordHelper.StartRecording();
 
         // Animate the countdown
         var startTime = Time.time;
@@ -58,7 +58,7 @@ public class NodeRecord : NodeControlBase
         }
         
         // Stop recording
-        //RecordManager.instance.recordHelper.StopRecording(normalEnd);
+        RecordManager.instance.recordHelper.StopRecording(normalEnd);
 
         //Goto Upload
         if(normalEnd){

@@ -13,6 +13,9 @@ public class RecordHelper : MonoBehaviour
     public bool recordMicrophone;
     public Camera recordCam;
 
+    [Header("Use Debug File")]
+    public bool useDebug;
+
     private MP4Recorder recorder;
     private CameraInput cameraInput;
     private AudioInput audioInput;
@@ -40,6 +43,8 @@ public class RecordHelper : MonoBehaviour
 
     public void StartRecording()
     {
+        if(useDebug) return;
+
         // Start recording
         var frameRate = 30;
         var sampleRate = recordMicrophone ? AudioSettings.outputSampleRate : 0;
@@ -55,6 +60,8 @@ public class RecordHelper : MonoBehaviour
 
     public async void StopRecording(bool shouldUpload)
     {
+        if(useDebug) return;
+        
         // Mute microphone
         microphoneSource.mute = true;
         // Stop recording

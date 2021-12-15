@@ -6,11 +6,25 @@ using UnityEngine.UI;
 public class PopupVideoInfo : MonoBehaviour
 {
     public Button BTN_Start;
-    public string Url;
+    public string MediaFile;
 
     void Start(){
         BTN_Start?.onClick.AddListener(delegate {
-            ArVideoManager.instance.PrepareMediaFile = Url;
+
+            Vector2 gps = OnlineMapsLocationService.instance.position;
+            NetworkManager.instance.API_GetBoxList(gps.y, gps.x, boxes => {
+                if(boxes.box == null)
+                    return;
+
+                foreach (var item in boxes.box)
+                {
+                    if(item.media_filename.Contains(MediaFile)){
+                        MediaFile = item.media_filename;
+                        ArVideoManager.instance.PrepareMediaFile = MediaFile;
+                    }
+                }
+            });
+            
         });
     }
 }

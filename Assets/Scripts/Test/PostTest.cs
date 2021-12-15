@@ -19,7 +19,7 @@ public class PostTest : MonoBehaviour
 
     [ContextMenu("TestBoxList")]
     public void TestBoxList(){
-        networkManager.API_GetBoxList(25.1385, 121.4591);
+        networkManager.API_GetBoxList(25.1385, 121.4591, null);
     }
     
     //[ContextMenu("Upload file")]

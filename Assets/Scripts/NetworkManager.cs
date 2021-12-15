@@ -18,9 +18,45 @@ public class NetworkManager : SoraLib.SingletonMono<NetworkManager>
     public string currentUUID;
     public string uploadUUID;
     public PoiBoxList Poi_Box;
+
+    public System.Action<float> OnProgressUpdate;
+    public System.Action<string,double,double,string,string,string> OnNewPosUploaded;
+    bool toAbort = false;
+
     void Start()
     {
         currentUUID = System.Guid.NewGuid().ToString().Replace("-", "");
+    }
+
+    public void StartUploadMedia(System.Action callback){
+        StartCoroutine(UploadMediaProgress(callback));
+    }
+
+    IEnumerator UploadMediaProgress(System.Action callback){
+
+        DataUUID boxData = null;
+        string toUploadFileName = "";
+
+        //Step1. 取得當前位置座標
+        Vector2 gps = OnlineMapsLocationService.instance.position;
+        Debug.Log($"current gps : {gps}");
+
+        //Step2. 取得座標對應的uuid
+        yield return HttpPostJSON(serverURL + api_getUploadAccess, GetLocationJSON(gps.y, gps.x), json => {
+            boxData = GetDataUUID(json);
+            toUploadFileName = $"{boxData.uuid}.mp4";
+            Debug.Log($"Get fileName: {toUploadFileName}");
+        });
+
+        //Step3. 上傳檔案, 並取名uuid
+        toAbort = false;
+        yield return HttpPostFile(serverURL + api_doUpload, RecordManager.instance.FilePath, toUploadFileName);
+
+        //Step4. 上傳座標, 標題資訊至Google  => 地點名稱	座標 Lat	座標 Lon	標題	內文	media
+        OnlineDataManager.instance.PostDataToSheet(boxData.uuid.Substring(0, 4), boxData.latitude.ToString(), boxData.longitude.ToString(), RecordManager.instance.ComingTitle, RecordManager.instance.ComingContent, toUploadFileName);
+        
+        OnNewPosUploaded?.Invoke(boxData.uuid.Substring(0, 4), boxData.latitude, boxData.longitude, RecordManager.instance.ComingTitle, RecordManager.instance.ComingContent, toUploadFileName);
+        callback?.Invoke();
     }
 
     public void API_UploadAccess(double lat, double lon)
@@ -35,13 +71,15 @@ public class NetworkManager : SoraLib.SingletonMono<NetworkManager>
         StartCoroutine(HttpPostFile(serverURL + api_doUpload, filePath, fileID));
     }
 
-    public void API_GetBoxList(double lat, double lon)
+    public void API_GetBoxList(double lat, double lon, System.Action<PoiBoxList> callback)
     {
         StartCoroutine(HttpPostJSON(serverURL + api_getBoxList, GetLocationUUIDJSON(lat, lon, currentUUID), json => {
             try {
                 var fullJson = "{\"box\":" + json + "}";
                 PoiBoxList box = JsonUtility.FromJson<PoiBoxList>(fullJson);
                 Poi_Box = box;
+
+                callback?.Invoke(box);
 
             } catch(System.Exception e){
                 Debug.Log(e.Message);
@@ -80,18 +118,36 @@ public class NetworkManager : SoraLib.SingletonMono<NetworkManager>
     }
 
     public IEnumerator HttpPostFile(string url, string filePath, string fileName){
+
+        if(string.IsNullOrEmpty(url) || string.IsNullOrEmpty(filePath) || string.IsNullOrEmpty(fileName)){
+            Debug.LogError("Post file param Error.");
+            yield break;
+        }
         
         WWWForm form = new WWWForm();
         form.AddBinaryData("file", File.ReadAllBytes(filePath), fileName);
         UnityWebRequest www = UnityWebRequest.Post(url, form);
 
-        yield return www.SendWebRequest();
+        var asyncOp = www.SendWebRequest();
+        while (!asyncOp.isDone)
+        {
+            if(toAbort){
+                www.Abort();
+                break;
+            }
+            OnProgressUpdate?.Invoke(asyncOp.progress);
+            yield return null;
+        }
 
         if (www.isNetworkError || www.isHttpError){
             Debug.Log(www.error);
         } else {
             Debug.Log("Form upload complete! >> :" + www.downloadHandler.text);
         }
+    }
+
+    public void AbortUploading(){
+        toAbort = true;
     }
 
     public string GetLocationJSON(double lat, double lon)

@@ -28,7 +28,7 @@ public class NodeMap : NodeControlBase
         m_popup.Data.Labels[2].SetActive(false);
 
         var info = m_popup.GetComponent<PopupVideoInfo>();
-        info.Url = data.Media;
+        info.MediaFile = data.Media;
 
         //show the popup
         m_popup.Show();
@@ -49,7 +49,7 @@ public class NodeMap : NodeControlBase
             m_popup.Data.Labels[2].SetActive(false);
 
             var info = m_popup.GetComponent<PopupVideoInfo>();
-            info.Url = data.Media;
+            info.MediaFile = data.Media;
         } else {
             m_popup.Data.Buttons[0].Interactable = false;
             m_popup.Data.Labels[2].SetActive(true);

@@ -12,45 +12,35 @@ public class NodeUpload : NodeControlBase
 
     public string DozzyEventUploadFin;
     public string DozzyPopupUploadFin;
-    
-    bool uploading = false;
 
     void Start(){
+        NetworkManager.instance.OnProgressUpdate += UpdateProgressText;
         BTN_Cancel?.onClick.AddListener(CancelUpload);
     }
 
-    public void CancelUpload(){
-        uploading = false;
+    void UpdateProgressText(float progress){
+        float preview = Mathf.FloorToInt(progress * 100);
+        TXT_Progress.text = $"{preview}%";
     }
 
-    IEnumerator StartUpload(){
+    void CancelUpload(){
+        NetworkManager.instance.AbortUploading();
+    }
 
-        float progress = 0f;
-        while(progress < 1 && uploading){
-            yield return null;
-            progress += 0.005f;
-            float preview = Mathf.FloorToInt(progress * 100);
-            TXT_Progress.text = $"{preview}%";
-        }
+    void OnUploadFinished(){
+        Doozy.Engine.GameEventMessage.SendEvent(DozzyEventUploadFin);
 
-        if(progress >= 1 && uploading){
-            uploading = false;
-            Doozy.Engine.GameEventMessage.SendEvent(DozzyEventUploadFin);
-            UIPopup m_popup = UIPopupManager.GetPopup(DozzyPopupUploadFin);
-            m_popup?.Show();
+        UIPopup m_popup = UIPopupManager.GetPopup(DozzyPopupUploadFin);
+        m_popup?.Show();
 
-            Debug.Log("Upload finished!");
-        }
-
-        uploading = false;
+        Debug.Log("Upload finished!");
     }
 
     // public override void OnShowTodo(){}
     public override void OnShowFinTodo(){
-        uploading = true;
-        StartCoroutine(StartUpload());
+        TXT_Progress.text = $"0%";
+        NetworkManager.instance.StartUploadMedia(OnUploadFinished);
     }
-
     // public override void OnHideTodo(){}
     // public override void OnHideFinTodo(){}
 }

@@ -342,6 +342,7 @@ MonoBehaviour:
   videoBitRateKbps: 5000
   recordMicrophone: 1
   recordCam: {fileID: 71828657}
+  useDebug: 0
 --- !u!1 &73439275
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,7 +499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab_VideoCanvas: {fileID: 4131461716655961662, guid: bfb07e842994e4749bd9fc413c9cfec3,
     type: 3}
-  PrepareMediaUrl: 
+  PrepareMediaFile: 
 --- !u!1 &255473233
 GameObject:
   m_ObjectHideFlags: 0
@@ -3977,10 +3978,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serverURL: https://media.iottalktw.com
-  getUploadAccess: /api/getUploadAccess
-  upload: /api/upload
-  getBoxList: /api/getBoxList
-  getMedia: /api/media
+  api_getUploadAccess: /api/getUploadAccess
+  api_doUpload: /api/upload
+  api_getBoxList: /api/getBoxList
+  api_getMedia: /api/media
   currentUUID: 
   uploadUUID: 
   Poi_Box:
@@ -23744,7 +23745,7 @@ MonoBehaviour:
   recordHelper: {fileID: 71828661}
   ComingTitle: 
   ComingContent: 
-  FilePath: 
+  FilePath: I:\UnityProject\NCTU_VoiceMap\Python\qoo.mp4
 --- !u!1 &1691323818
 GameObject:
   m_ObjectHideFlags: 0
