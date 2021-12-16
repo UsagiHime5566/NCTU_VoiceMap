@@ -5,21 +5,27 @@ using UnityEngine.UI;
 
 public class NodeReplay : NodeControlBase
 {
+    public ARCameraHelper ReplayCamera;
     public GameObject View_HowToUse;
     public Button BTN_Play;
 
     void Start(){
         BTN_Play?.onClick.AddListener(delegate {
-            ArVideoManager.instance.CreateVideoCanvas(new Vector3(0, 0, 0));
+            ArVideoManager.instance.CreateVideoCanvas(ReplayCamera.TrackerSlam);
+            ReplayCamera.TrackingStart();
         });
     }
 
     public override void OnShowTodo(){
         View_HowToUse.SetActive(true);
+        ReplayCamera.StartCamera(null);
     }
 
     // public override void OnShowFinTodo(){}
 
-    // public override void OnHideTodo(){}
+    public override void OnHideTodo(){
+        ArVideoManager.instance.RemoveVideoCanvas();
+        ReplayCamera.StopCamera();
+    }
     // public override void OnHideFinTodo(){}
 }

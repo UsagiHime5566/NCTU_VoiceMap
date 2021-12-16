@@ -15,6 +15,7 @@ public class POIManager : SoraLib.SingletonMono<POIManager>
     public Action OnAppInfosDownloaded;
     public Action<POIData> OnUserClickPoi;
     public Action<POIData> OnUserArrivedPoi;
+    public UserControl UserController { get; set; }
 
     IEnumerator Start()
     {

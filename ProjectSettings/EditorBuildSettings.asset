@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/NatCam/Examples/MiniCam/MiniCam.unity
     guid: 7aecd6f4db5264d07adf42189ee842ea
+  - enabled: 0
+    path: Assets/Scenes/SlamTest.unity
+    guid: 16e3caa1840f3e74abe53fe3879ba59e
   m_configObjects: {}

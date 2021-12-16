@@ -10,6 +10,11 @@ public class ArVideoManager : SoraLib.SingletonMono<ArVideoManager>
     string lastUrl;
     VideoCanvas lastInstance;
 
+    public void CreateVideoCanvas(Transform parent){
+        CreateVideoCanvas(Vector3.zero);
+        lastInstance.transform.parent = parent;
+    }
+
     public void CreateVideoCanvas(Vector3 pos){
         string url = NetworkManager.instance.serverURL + NetworkManager.instance.api_getMedia + "/" + PrepareMediaFile;
         CreateVideoCanvas(pos, url);
@@ -30,5 +35,11 @@ public class ArVideoManager : SoraLib.SingletonMono<ArVideoManager>
         lastUrl = url;
         lastInstance = Instantiate(prefab_VideoCanvas, pos, Quaternion.identity);
         lastInstance.Play(url);
+    }
+
+    public void RemoveVideoCanvas(){
+        lastUrl = "";
+        if(lastInstance)
+            Destroy(lastInstance.gameObject);
     }
 }

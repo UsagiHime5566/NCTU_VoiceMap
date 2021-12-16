@@ -61,11 +61,12 @@ public class NodeMap : NodeControlBase
 
     public override void OnShowTodo(){
         MapCamera.depth = 1;
+        POIManager.instance.UserController.ColliderActive(true);
     }
     // public override void OnShowFinTodo(){}
 
     public override void OnHideTodo(){
-        
+        POIManager.instance.UserController.ColliderActive(false);
     }
     public override void OnHideFinTodo(){
         MapCamera.depth = -1;

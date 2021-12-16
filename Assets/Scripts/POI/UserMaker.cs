@@ -10,6 +10,7 @@ public class UserMaker : MonoBehaviour
 
 
     OnlineMapsMarker3D locationMarker;
+    UserControl markerController;
     Transform markerSprite;
     Vector2 newPosition;
     float newCompass;
@@ -44,6 +45,8 @@ public class UserMaker : MonoBehaviour
 
         locationMarker.scale = scaleSize;
         locationMarker.instance.name = "Player";
+        markerController = locationMarker.instance.GetComponent<UserControl>();
+        POIManager.instance.UserController = markerController;
         markerSprite = locationMarker.instance.transform.GetChild(0);
 
         // Gets Location Service Component.
