@@ -7,8 +7,8 @@ using NatSuite.Recorders.Inputs;
 public class RecordHelper : MonoBehaviour
 {
     [Header(@"Recording")]
-    public int videoWidth = 1280;
-    public int videoHeight = 720;
+    public int videoWidth = 720;
+    public int videoHeight = 1280;
     public int videoBitRateKbps = 5000;
     public bool recordMicrophone;
     public Camera recordCam;

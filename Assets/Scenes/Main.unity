@@ -337,8 +337,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd22022012449d447b511695514e9ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  videoWidth: 1280
-  videoHeight: 720
+  videoWidth: 720
+  videoHeight: 1280
   videoBitRateKbps: 5000
   recordMicrophone: 1
   recordCam: {fileID: 71828657}
