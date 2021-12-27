@@ -12,8 +12,8 @@ public class NodeReplay : NodeControlBase
 
     void Start(){
         BTN_Play?.onClick.AddListener(delegate {
-            ArVideoManager.instance.CreateVideoCanvas(ReplayCamera.TrackerSlam);
             ReplayCamera.TrackingStart();
+            ArVideoManager.instance.CreateVideoCanvas(ReplayCamera.TrackerSlam);
         });
     }
 

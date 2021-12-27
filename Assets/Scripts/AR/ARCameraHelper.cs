@@ -117,9 +117,9 @@ public class ARCameraHelper : CameraHelperBase
     }
 
     public void TrackingStart(){
-        VoidAR.GetInstance().startMarkerlessTracking();
-
         TrackerSlam.gameObject.SetActive(true);
+        
+        VoidAR.GetInstance().startMarkerlessTracking();
         Debug.Log("Start Tracking");
     }
 

@@ -20,6 +20,10 @@ public class ArVideoManager : SoraLib.SingletonMono<ArVideoManager>
         CreateVideoCanvas(pos, url);
     }
 
+    public void ResetInstance(){
+        
+    }
+
     public void CreateVideoCanvas(Vector3 pos, string url){
         if(string.IsNullOrEmpty(url))
             return;
