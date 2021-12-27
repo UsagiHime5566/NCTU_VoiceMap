@@ -7,7 +7,7 @@ public class UserControl : MonoBehaviour
     public BoxCollider boxCollider;
     void Start()
     {
-        boxCollider.enabled = false;
+        //boxCollider.enabled = false;
     }
 
     public void ColliderActive(bool val){

@@ -8,6 +8,7 @@ public class NodeReplay : NodeControlBase
     public ARCameraHelper ReplayCamera;
     public GameObject View_HowToUse;
     public Button BTN_Play;
+    public Canvas CoverLogo;
 
     void Start(){
         BTN_Play?.onClick.AddListener(delegate {
@@ -19,6 +20,7 @@ public class NodeReplay : NodeControlBase
     public override void OnShowTodo(){
         View_HowToUse.SetActive(true);
         ReplayCamera.StartCamera(null);
+        CoverLogo.gameObject.SetActive(true);
     }
 
     // public override void OnShowFinTodo(){}
@@ -26,6 +28,7 @@ public class NodeReplay : NodeControlBase
     public override void OnHideTodo(){
         ArVideoManager.instance.RemoveVideoCanvas();
         ReplayCamera.StopCamera();
+        CoverLogo.gameObject.SetActive(false);
     }
     // public override void OnHideFinTodo(){}
 }

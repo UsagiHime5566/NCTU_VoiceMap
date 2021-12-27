@@ -12,7 +12,7 @@ public class UserCollision : MonoBehaviour
             markerHelper?.TrigUserArriveMarker();
 
             //Shake Device
-            Handheld.Vibrate();
+            //Handheld.Vibrate();
 
             if(other.gameObject.transform.childCount == 0)
                 return;
